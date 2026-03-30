@@ -5,7 +5,9 @@ description = "MCP tools"
 authors = [{name = "Harry Bevins", email = "htjb2@cam.ac.uk"}]
 requires-python = ">=3.10"
 dependencies = [
+    "markdown>=3.10.2",
     "mcp[cli]",
+    "numpy>=2.2.6",
     "ollama",
     "python-dotenv",
 ]
