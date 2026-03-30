@@ -10,7 +10,6 @@ load_dotenv(os.path.expanduser("~/.env"))
 
 ollama_key = os.getenv("OLLAMA_API_KEY", "")
 
-
 assert ollama_key, "Error: OLLAMA_API_KEY not found. Update .env"
 
 client = Client(
@@ -79,8 +78,8 @@ def ollama_chat(
 
 
 def main() -> None:
+    """Run the Ollama MCP server."""
     mcp.run()
-
 
 if __name__ == "__main__":
     main()
