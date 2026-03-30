@@ -1,0 +1,42 @@
+[project]
+name = "mcps"
+version = "0.1.0"
+description = "MCP tools"
+authors = [{name = "Harry Bevins", email = "htjb2@cam.ac.uk"}]
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]",
+    "ollama",
+    "python-dotenv",
+]
+
+[project.scripts]
+ollama-mcp = "mcps.ollama_mcp:main"
+
+[build-system]
+requires = ["setuptools>=77.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mcps*"]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pre-commit",
+]
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select =["E", "F", "W",  # basics
+            "I",            # isort
+            "D",            # docstrings
+            "UP",           # pyupgrade (includes type modernization)
+            "ANN",          # type annotations
+            ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
