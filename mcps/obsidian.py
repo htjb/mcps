@@ -54,8 +54,12 @@ def save_note(text, text_hash, embedding):
     conn.commit()
 
 
-# Search
-def search(query_embedding, top_k=5):
+#@mcp.tool(
+#        'obsidian_search',
+#        'Search for notes with similar content to the prompt.'
+#)
+def search(prompt, top_k=5):
+    query_embedding = embedding(prompt)
     rows = conn.execute("SELECT text, embedding FROM notes").fetchall()
     texts = [r[0] for r in rows]
     embeddings = np.stack(
