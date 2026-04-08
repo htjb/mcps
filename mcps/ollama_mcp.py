@@ -38,11 +38,16 @@ def list_models() -> str:
     )
 
 
-@mcp.tool(name="ollama", description="Chat with Ollama")
+@mcp.tool(
+    name="query_model",
+    description="Send a query to a specific local or "
+    + "cloud model and return its response. Use this"
+    + "to delegate a question to a more capable model.",
+)
 def ollama_chat(
-    query: str = Field(description="The input query for ollama."),
+    query: str = Field(description="The input query to send to the model."),
     model: str = Field(
-        description="The model to use for the chat.",
+        description="The model to use.",
         default="qwen3-coder:480b-cloud",
     ),
 ) -> str:
