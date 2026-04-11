@@ -104,8 +104,6 @@ def main() -> None:
     n = 500
     hashes, chunks, file_names = [], [], []
     for i in tqdm(range(len(files)), desc="Processing files"):
-        if i > 10:
-            continue
         with open(files[i]) as f:
             contents = markdown.markdown(f.read())
         contents = BeautifulSoup(contents, "html.parser").get_text()
