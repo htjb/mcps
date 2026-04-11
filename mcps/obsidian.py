@@ -74,24 +74,57 @@ def save_note(
     description="Search for notes with similar content to the prompt using "
     + "cosine similarity between nomic-embed-text embeddings.",
 )
-def search(prompt: str, top_k: int = 5) -> list:
+def search(
+    prompt: str = Field(description="The prompt to search for"),
+    top_k: int = Field(
+        default=5, description="The number of top results to return"
+    ),
+) -> tuple[list[str], list[str]]:
     """Search for notes with similar content to the prompt.
 
     Args:
         prompt (str): The prompt to search for.
         top_k (int): The number of top results to return.
+
+    Returns:
+        text (str): The text of the matching notes.
+        file_name (str): The name of the file containing each matching note.
     """
     query_embedding = embedding(prompt)
-    rows = conn.execute("SELECT text, embedding FROM notes").fetchall()
+    rows = conn.execute(
+        "SELECT text, embedding, file_name FROM notes"
+    ).fetchall()
 
     texts = [r[0] for r in rows]
+    file_names = [r[2] for r in rows]
     embeddings = np.stack(
         [np.frombuffer(r[1], dtype=np.float32) for r in rows]
     )
 
     scores = embeddings @ query_embedding  # cosine if normalised
     top = np.argsort(scores)[::-1][:top_k]
-    return [texts[i] for i in top]
+    return [texts[i] for i in top], [file_names[i] for i in top]
+
+
+@mcp.tool(
+    name="fetch_note",
+    description="Fetch the full text of a note given its file name.",
+)
+def fetch(
+    file: str = Field(description="The file path to a markdown note."),
+) -> str:
+    """Fetch the full content of a file.
+
+    Args:
+        file (str): The path to the file.
+
+    Returns:
+        str: The text in the file.
+    """
+    with open(file) as f:
+        contents = markdown.markdown(f.read())
+    contents = BeautifulSoup(contents, "html.parser").get_text()
+    return contents
 
 
 def main() -> None:
@@ -132,4 +165,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    #print(search("star formation"))
