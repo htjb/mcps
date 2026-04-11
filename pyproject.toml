@@ -16,6 +16,7 @@ dependencies = [
 
 [project.scripts]
 ollama-mcp = "mcps.ollama_mcp:main"
+obsidian-mcp = "mcps.obsidian:main"
 
 [build-system]
 requires = ["setuptools>=77.0", "wheel"]
