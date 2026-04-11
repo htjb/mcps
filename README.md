@@ -34,3 +34,10 @@ are stored in the obsidian vault in an SQLite DB called `notes.db`. Need to add
 `OBSIDIAN_DIR=/path/to/obsidian/vault/"` in `~/.env`.
 
 Installed as `obsidian-mcp`.
+
+Needs the `nomic-embed-text` model installed via ollama to embed the text. Run
+
+```bash
+ollama pull nomic-embed-text
+```
+to pull it.
