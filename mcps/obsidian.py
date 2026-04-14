@@ -130,7 +130,7 @@ def fetch(
 def main() -> None:
     """Run the Obsidian MCP server."""
     # find all the md files
-    files = glob.glob(obsidian_location + "**/*.md", recursive=True)
+    files = glob.glob(obsidian_location + "/**/*.md", recursive=True)
 
     # chunk all the text into 5000 character blocks and create a hash
     # hashes are used to check if the text has already been embedded later
